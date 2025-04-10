@@ -1,39 +1,12 @@
-#include "prints.h"
 
-void printarMedidasMPU(float aceleracaoX, float aceleracaoY, float aceleracaoZ, float giroX, float giroY, float giroZ, float temperatura)
+#include <Arduino.h>
+#include <TinyGPS++.h>
+
+#define GPS_BAUD 9600
+
+void gpsSetup(HardwareSerial *gpsSerial, int RX, int TX)
 {
-    Serial.println();
-    Serial.print(aceleracaoX);
-    Serial.print(",");
-    Serial.print(aceleracaoY);
-    Serial.print(",");
-    Serial.print(aceleracaoZ);
-    Serial.print(",");
-    Serial.print(giroX);
-    Serial.print(",");
-    Serial.print(giroY);
-    Serial.print(",");
-    Serial.print(giroZ);
-    Serial.print(",");
-    Serial.print(temperatura);
-    Serial.println();
-}
-
-void printarDadosBmpDescritivo(Adafruit_BMP280 *bmp)
-{
-    Serial.print(F("Temperatura = "));
-    Serial.print(bmp->readTemperature());
-    Serial.println(" °C");
-
-    Serial.print(F("Pressao = "));
-    Serial.print(bmp->readPressure());
-    Serial.println(" Pa");
-
-    Serial.print(F("Altitude aproximada = "));
-    Serial.print(bmp->readAltitude(1013.25));
-    Serial.println(" m");
-
-    Serial.println();
+    gpsSerial->begin(GPS_BAUD, SERIAL_8N1, RX, TX);
 }
 
 void lerGPS(TinyGPSPlus *gps, HardwareSerial *gpsSerial)
